@@ -1,2 +1,2 @@
-console.log("Battleship");
+(()=>{"use strict";const t=new class{constructor(){this.trial="hello battleship trial"}trialMethod(){console.log("battleship trial method")}};console.log(t.trial),t.trialMethod()})();
 //# sourceMappingURL=app.bundle.js.map
