@@ -1,11 +1,3 @@
-class Ship {
-  constructor() {
-    this.trial = 'hello battleship trial';
-  }
+class Ship {}
 
-  trialMethod() {
-    console.log('battleship trial method');
-  }
-}
-
-export { Ship };
+export default Ship;
