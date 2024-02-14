@@ -113,6 +113,28 @@ class Gameboard {
   }
 }
 
-class Player {}
+class Player {
+  constructor() {
+    this.gameboard = null;
+  }
+
+  startGame() {
+    this.gameboard = new Gameboard();
+  }
+
+  createShip(row, column) {
+    return new Ship(row, column);
+  }
+
+  placeShip(ship, row, column) {
+    if (this.gameboard) {
+      this.gameboard.placeShip(ship, row, column);
+    }
+  }
+
+  attack(opponent, row, column) {
+    opponent.gameboard.receiveAttack(row, column);
+  }
+}
 
 export { Ship, Gameboard, Player };
