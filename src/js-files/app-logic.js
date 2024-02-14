@@ -38,7 +38,95 @@ const gameboardGrid = (rows, columns) => {
 };
 
 // Gameboard class
-class Gameboard {}
+class Gameboard {
+  constructor() {
+    this.gameGrid = gameboardGrid(10, 10);
+    this.ships = [];
+  }
+
+  placeShip(ship, row, column) {
+    if (
+      row >= 0 &&
+      row < this.gameGrid.length &&
+      column >= 0 &&
+      column < this.gameGrid.length
+    ) {
+      // Check if ship can be placed
+      for (let i = 0; i < ship.length; i++) {
+        if (
+          this.gameGrid[row][column + i] === null ||
+          this.gameGrid[row][column + i] === 'ship'
+        ) {
+          console.log(
+            `Cannot place ship at (${row}, ${column}). There's already a ship there.`
+          );
+          return;
+        }
+      }
+
+      // Place ship
+      ship.startRow = row;
+      ship.startColumn = column;
+      for (let i = 0; i < ship.length; i++) {
+        this.gameGrid[row][column + i] = 'ship';
+      }
+      this.ships.push(ship);
+    } else {
+      console.log(`Invalid coordinates (${row}, ${column}).`);
+    }
+  }
+
+  receiveAttack(row, column) {
+    if (
+      row >= 0 &&
+      row < this.gameGrid.length &&
+      column >= 0 &&
+      column < this.gameGrid[0].length
+    ) {
+      if (this.gameGrid[row][column] === 'ship') {
+        for (const ship of this.ships) {
+          if (
+            row === ship.startRow &&
+            column >= ship.startColumn &&
+            column < ship.startColumn + ship.length
+          ) {
+            ship.hit();
+            this.gameGrid[row][column] = 'hit';
+            console.log('Hit!');
+            return;
+          }
+        }
+      } else if (
+        this.gameGrid[row][column] === 'hit' ||
+        this.gameGrid[row][column] === 'missed'
+      ) {
+        console.log(`Can't hit same spot or missed spot`);
+        return;
+      }
+    } else {
+      console.log(`Invalid coordinates (${row}, ${column}).`);
+    }
+
+    if (typeof this.gameGrid[row][column] === 'number') {
+      this.gameGrid[row][column] = 'missed';
+    }
+  }
+
+  gameOver() {
+    let gameIsOver = true;
+
+    for (const ship of this.ships) {
+      if (!ship.isSunk()) {
+        gameIsOver = false;
+        break;
+      }
+    }
+
+    if (gameIsOver) {
+      return 'Game Over';
+    }
+  }
+}
 
 const start = new Gameboard();
 
