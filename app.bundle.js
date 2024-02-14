@@ -1,0 +1,2 @@
+(()=>{"use strict";const t=new class{},e=new class{constructor(t,e){this.length=t,this.hitTimes=e}hit(){this.isSunk()||this.hitTimes++}isSunk(){return this.hitTimes===this.length}}(5,0);t.placeShip(e,2,3),t.receiveAttack(2,3),t.receiveAttack(2,4),t.receiveAttack(2,5),t.receiveAttack(2,6),t.receiveAttack(2,7),t.gameOver()})();
+//# sourceMappingURL=app.bundle.js.map
