@@ -1,2 +1,2 @@
-(()=>{var o={592:()=>{console.log("hello dom interaction")}},e={};function r(t){var n=e[t];if(void 0!==n)return n.exports;var s=e[t]={exports:{}};return o[t](s,s.exports,r),s.exports}(()=>{"use strict";new Set;const o=void 0;console.log(o.x),console.log(o.y),r(592)})()})();
+(()=>{var o={592:()=>{console.log("hello dom interaction")}},r={};function t(e){var n=r[e];if(void 0!==n)return n.exports;var a=r[e]={exports:{}};return o[e](a,a.exports,t),a.exports}(()=>{"use strict";const o=new Set,r=(()=>{let r,t;do{r=Math.floor(10*Math.random()),t=Math.floor(10*Math.random())}while(o.has(`${r},${t}`));return o.add(`${r},${t}`),{x:r,y:t}})();console.log(r.x),console.log(r.y),t(592)})()})();
 //# sourceMappingURL=app.bundle.js.map
