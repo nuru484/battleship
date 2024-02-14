@@ -1,4 +1,4 @@
-import { Ship, Gameboard } from './src/js-files/app-logic.js';
+import { Ship, Gameboard, Player } from './src/js-files/app-logic.js';
 
 describe('Ship class', () => {
   test('properties and methods', () => {
@@ -79,5 +79,68 @@ describe('Gameboard class', () => {
     expect(start.placeShip(ship, 2, 9)).toBeUndefined();
     expect(start.placeShip(ship, 2, 10)).toBeUndefined();
     expect(start.placeShip(ship, 2, 11)).toBeUndefined();
+  });
+});
+
+describe('Player class', () => {
+  test('Player creation', () => {
+    const player = new Player();
+    player.startGame();
+
+    expect(player.gameboard.gameGrid).toHaveLength(10);
+
+    const playerShip = player.createShip(5, 0);
+    expect(playerShip.length).toBe(5);
+
+    player.placeShip(playerShip, 2, 3);
+    expect(playerShip.startRow).toBe(2);
+
+    const computer = new Player();
+    computer.startGame();
+    computer.attack(player, 2, 3);
+
+    expect(playerShip.hitTimes).toBe(1);
+
+    computer.attack(player, 2, 4);
+    computer.attack(player, 2, 5);
+    computer.attack(player, 2, 6);
+    computer.attack(player, 2, 7);
+
+    expect(playerShip.isSunk()).toBe(true);
+  });
+
+  test('Attacking Already Hit Spot', () => {
+    const player = new Player();
+    player.startGame();
+    const playerShip = player.createShip(5, 0);
+    player.placeShip(playerShip, 2, 3);
+
+    const computer = new Player();
+    computer.startGame();
+    computer.attack(player, 2, 3);
+
+    // Attack a spot that has already been hit
+    const initialHitTimes = playerShip.hitTimes;
+    computer.attack(player, 2, 3);
+
+    // Verify that ship's hit count remains the same
+    expect(playerShip.hitTimes).toBe(initialHitTimes);
+  });
+
+  test('Attacking Missed Spot', () => {
+    const player = new Player();
+    player.startGame();
+    const playerShip = player.createShip(5, 0);
+    player.placeShip(playerShip, 2, 3);
+
+    const computer = new Player();
+    computer.startGame();
+
+    // Attack a spot that was missed
+    computer.attack(player, 3, 6);
+
+    // Verify that the game grid remains unchanged
+    expect(player.gameboard.gameGrid[3][6]).not.toBe('hit');
+    expect(player.gameboard.gameGrid[3][6]).toBe('missed');
   });
 });

@@ -9,9 +9,11 @@
     "sourceType": "module"
   },
   "rules": {
-    "max-classes-per-file": ["error", 2],
+    "max-classes-per-file": ["error", 3],
     "no-plusplus": "off",
     "no-param-reassign": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "class-methods-use-this": "off",
+    "no-undef": "off"
   }
 }

@@ -55,9 +55,6 @@ class Gameboard {
           this.gameGrid[row][column + i] === null ||
           this.gameGrid[row][column + i] === 'ship'
         ) {
-          console.log(
-            `Cannot place ship at (${row}, ${column}). There's already a ship there.`
-          );
           return;
         }
       }
@@ -70,11 +67,7 @@ class Gameboard {
           this.gameGrid[row][column + i] = 'ship';
         }
         this.ships.push(ship);
-      } else {
-        console.log(`Ship does not fit within the row.`);
       }
-    } else {
-      console.log(`Invalid coordinates (${row}, ${column}).`);
     }
   }
 
@@ -96,20 +89,15 @@ class Gameboard {
         if (hitShip) {
           hitShip.hit();
           this.gameGrid[row][column] = 'hit';
-          console.log('Hit!');
           return;
         }
       } else if (
         this.gameGrid[row][column] === 'hit' ||
         this.gameGrid[row][column] === 'missed'
       ) {
-        console.log(`Can't hit same spot or missed spot`);
         return;
       }
-    } else {
-      console.log(`Invalid coordinates (${row}, ${column}).`);
     }
-
     if (typeof this.gameGrid[row][column] === 'number') {
       this.gameGrid[row][column] = 'missed';
     }
@@ -125,24 +113,6 @@ class Gameboard {
   }
 }
 
-const player = () => {
-  console.log('hello world');
-};
+class Player {}
 
-player();
-
-const start = new Gameboard();
-const myShip = new Ship(5, 0);
-start.placeShip(myShip, 2, 3);
-
-start.receiveAttack(2, 3);
-start.receiveAttack(2, 4);
-start.receiveAttack(2, 5);
-start.receiveAttack(2, 6);
-start.receiveAttack(2, 7);
-
-start.placeShip(myShip, 2, 7);
-
-start.gameOver();
-
-export { Ship, Gameboard };
+export { Ship, Gameboard, Player };
