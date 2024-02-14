@@ -138,7 +138,19 @@ class Player {
 }
 
 const generatedCoordinates = new Set();
-const generateCoordinates = () => {};
+const generateCoordinates = () => {
+  let x;
+  let y;
+
+  do {
+    x = Math.floor(Math.random() * 10);
+    y = Math.floor(Math.random() * 10);
+  } while (generatedCoordinates.has(`${x},${y}`));
+
+  generatedCoordinates.add(`${x},${y}`);
+
+  return { x, y };
+};
 
 // Example usage
 const cordinates = generateCoordinates();
