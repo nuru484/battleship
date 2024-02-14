@@ -70,4 +70,14 @@ describe('Gameboard class', () => {
     expect(start.gameGrid[3][7]).not.toBe('ship');
     expect(start.ships).toHaveLength(1);
   });
+
+  test('Cannot place ship if it does not fit within the row', () => {
+    const ship = new Ship(5, 0);
+
+    expect(start.placeShip(ship, 2, 7)).toBeUndefined();
+    expect(start.placeShip(ship, 2, 8)).toBeUndefined();
+    expect(start.placeShip(ship, 2, 9)).toBeUndefined();
+    expect(start.placeShip(ship, 2, 10)).toBeUndefined();
+    expect(start.placeShip(ship, 2, 11)).toBeUndefined();
+  });
 });

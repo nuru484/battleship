@@ -64,13 +64,18 @@ class Gameboard {
         }
       }
 
-      // Place ship
-      ship.startRow = row;
-      ship.startColumn = column;
-      for (let i = 0; i < ship.length; i++) {
-        this.gameGrid[row][column + i] = 'ship';
+      if (column + ship.length <= this.gameGrid[row].length) {
+        // Place ship
+        ship.startRow = row;
+        ship.startColumn = column;
+        for (let i = 0; i < ship.length; i++) {
+          this.gameGrid[row][column + i] = 'ship';
+        }
+        this.ships.push(ship);
+      } else {
+        console.log(`Ship does not fit within the row.`);
+        return undefined;
       }
-      this.ships.push(ship);
     } else {
       console.log(`Invalid coordinates (${row}, ${column}).`);
     }
@@ -139,6 +144,8 @@ start.receiveAttack(2, 4);
 start.receiveAttack(2, 5);
 start.receiveAttack(2, 6);
 start.receiveAttack(2, 7);
+
+start.placeShip(myShip, 2, 7);
 
 start.gameOver();
 
