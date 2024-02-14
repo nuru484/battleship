@@ -7,7 +7,7 @@ class Ship {
 
   hit() {
     if (!this.isSunk()) {
-      this.hitTimes++;
+      this.hitTimes += 1;
     }
   }
 
@@ -21,7 +21,7 @@ class Ship {
 
 // Gameboard grid function
 const gameboardGrid = (rows, columns) => {
-  let grid = [];
+  const grid = [];
   let value = 0;
 
   // Two dimensional array
@@ -31,8 +31,6 @@ const gameboardGrid = (rows, columns) => {
       grid[i][j] = value++;
     }
   }
-  console.table(grid);
-  console.log(grid.length);
 
   return grid;
 };
@@ -74,7 +72,6 @@ class Gameboard {
         this.ships.push(ship);
       } else {
         console.log(`Ship does not fit within the row.`);
-        return undefined;
       }
     } else {
       console.log(`Invalid coordinates (${row}, ${column}).`);
@@ -89,17 +86,18 @@ class Gameboard {
       column < this.gameGrid[0].length
     ) {
       if (this.gameGrid[row][column] === 'ship') {
-        for (const ship of this.ships) {
-          if (
+        const hitShip = this.ships.find(
+          (ship) =>
             row === ship.startRow &&
             column >= ship.startColumn &&
             column < ship.startColumn + ship.length
-          ) {
-            ship.hit();
-            this.gameGrid[row][column] = 'hit';
-            console.log('Hit!');
-            return;
-          }
+        );
+
+        if (hitShip) {
+          hitShip.hit();
+          this.gameGrid[row][column] = 'hit';
+          console.log('Hit!');
+          return;
         }
       } else if (
         this.gameGrid[row][column] === 'hit' ||
@@ -118,25 +116,23 @@ class Gameboard {
   }
 
   gameOver() {
-    let gameIsOver = true;
-
-    for (const ship of this.ships) {
-      if (!ship.isSunk()) {
-        gameIsOver = false;
-        break;
-      }
-    }
+    const gameIsOver = this.ships.every((ship) => ship.isSunk());
 
     if (gameIsOver) {
       return 'Game Over';
     }
+    return undefined;
   }
 }
 
+const player = () => {
+  console.log('hello world');
+};
+
+player();
+
 const start = new Gameboard();
-
 const myShip = new Ship(5, 0);
-
 start.placeShip(myShip, 2, 3);
 
 start.receiveAttack(2, 3);
