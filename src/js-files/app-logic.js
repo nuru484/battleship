@@ -137,4 +137,34 @@ class Player {
   }
 }
 
+// Creating player and computer instance from Player class
+const player = new Player();
+player.startGame();
+const playerShip = player.createShip(5, 0);
+player.placeShip(playerShip, 2, 3);
+
+// console.table(player.gameboard.gameGrid);
+// console.log(playerShip);
+
+const computer = new Player();
+computer.startGame();
+const computerShip = computer.createShip(5, 0);
+computer.placeShip(computerShip, 3, 3);
+
+// Computer attacks player
+computer.attack(player, 2, 3);
+computer.attack(player, 2, 4);
+computer.attack(player, 2, 5);
+computer.attack(player, 2, 6);
+computer.attack(player, 2, 7);
+
+// Computer attacks already hit spot
+computer.attack(player, 2, 7);
+
+// Computer attacks and missed
+computer.attack(player, 3, 6);
+
+// console.table(player.gameboard.gameGrid);
+// console.log(playerShip);
+
 export { Ship, Gameboard, Player };
