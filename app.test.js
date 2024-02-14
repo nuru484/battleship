@@ -1,4 +1,9 @@
-import { Ship, Gameboard, Player } from './src/js-files/app-logic.js';
+import {
+  Ship,
+  Gameboard,
+  Player,
+  generateCoordinates,
+} from './src/js-files/app-logic.js';
 
 describe('Ship class', () => {
   test('properties and methods', () => {
@@ -142,5 +147,24 @@ describe('Player class', () => {
     // Verify that the game grid remains unchanged
     expect(player.gameboard.gameGrid[3][6]).not.toBe('hit');
     expect(player.gameboard.gameGrid[3][6]).toBe('missed');
+  });
+});
+
+describe('generateCoordinates function', () => {
+  test('should return an object with x and y properties', () => {
+    const coordinates = generateCoordinates();
+    expect(coordinates).toHaveProperty('x');
+    expect(coordinates).toHaveProperty('y');
+  });
+
+  test('should return unique coordinates', () => {
+    const generated = new Set();
+
+    for (let i = 0; i < 10; i++) {
+      const coordinates = generateCoordinates();
+      const key = `${coordinates.x},${coordinates.y}`;
+      expect(generated.has(key)).toBe(false);
+      generated.add(key);
+    }
   });
 });
