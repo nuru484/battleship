@@ -61,7 +61,11 @@ const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
 
       attacker.attack(attackReceiver, row, col);
 
-      computerAttack();
+      if (cell.textContent === 'miss' || cell.textContent === 'hit') {
+        console.log('Cell is already being shot');
+      } else {
+        computerAttack();
+      }
 
       renderGameBoard(gameBoard, cells);
     });
