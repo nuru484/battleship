@@ -13,3 +13,21 @@ computer.startGame();
 const computerShip = computer.createShip(5);
 computer.placeShip(computerShip, 5, 4);
 const computerGameBoard = computer.gameBoard.gameGrid;
+
+const playerTable = document.getElementById('playerTable');
+const computerTable = document.getElementById('computerTable');
+
+const createGameBoard = (table, className) => {
+  for (let i = 0; i < 10; i++) {
+    const row = table.insertRow();
+
+    for (let j = 0; j < 10; j++) {
+      const cell = row.insertCell();
+      cell.textContent = ``;
+      cell.classList.add(className);
+    }
+  }
+};
+
+createGameBoard(playerTable, 'playerCells');
+createGameBoard(computerTable, 'computerCells');
