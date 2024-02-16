@@ -89,7 +89,6 @@ class Gameboard {
         if (hitShip) {
           hitShip.hit();
           this.gameGrid[row][column] = 'hit';
-          return;
         }
       } else if (
         this.gameGrid[row][column] === 'hit' ||
@@ -136,7 +135,6 @@ class Player {
 
   attack(opponent, row, column) {
     opponent.gameBoard.receiveAttack(row, column);
-    // return true;
   }
 }
 

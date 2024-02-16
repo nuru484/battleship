@@ -44,10 +44,16 @@ const renderGameBoard = (gameBoardArray, cells) => {
   });
 };
 
+const computerAttack = () => {
+  const cordinates = generateCoordinates();
+  computer.attack(player, cordinates.x, cordinates.y);
+  renderGameBoard(playerGameBoard, playerCells);
+};
+
 renderGameBoard(playerGameBoard, playerCells);
 renderGameBoard(computerGameBoard, computerCells);
 
-const attackFunction = (gameBoard, cells, ship, attacker, attackReceiver) => {
+const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
   cells.forEach((cell, index) => {
     cell.addEventListener('click', () => {
       const row = Math.floor(index / gameBoard[0].length);
@@ -55,13 +61,11 @@ const attackFunction = (gameBoard, cells, ship, attacker, attackReceiver) => {
 
       attacker.attack(attackReceiver, row, col);
 
+      computerAttack();
+
       renderGameBoard(gameBoard, cells);
-
-      console.table(gameBoard);
-
-      console.log(ship);
     });
   });
 };
 
-attackFunction(playerGameBoard, playerCells, playerShip, computer, player);
+attackFunction(computerGameBoard, computerCells, player, computer);
