@@ -31,3 +31,18 @@ const createGameBoard = (table, className) => {
 
 createGameBoard(playerTable, 'playerCells');
 createGameBoard(computerTable, 'computerCells');
+
+const playerCells = document.querySelectorAll('.playerCells');
+const computerCells = document.querySelectorAll('.computerCells');
+
+const renderGameBoard = (gameBoardArray, cells) => {
+  cells.forEach((cell, index) => {
+    const row = Math.floor(index / gameBoardArray[0].length);
+    const col = index % gameBoardArray[0].length;
+
+    cell.textContent = gameBoardArray[row][col];
+  });
+};
+
+renderGameBoard(playerGameBoard, playerCells);
+renderGameBoard(computerGameBoard, computerCells);
