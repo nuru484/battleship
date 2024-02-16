@@ -46,3 +46,22 @@ const renderGameBoard = (gameBoardArray, cells) => {
 
 renderGameBoard(playerGameBoard, playerCells);
 renderGameBoard(computerGameBoard, computerCells);
+
+const attackFunction = (gameBoard, cells, ship, attacker, attackReceiver) => {
+  cells.forEach((cell, index) => {
+    cell.addEventListener('click', () => {
+      const row = Math.floor(index / gameBoard[0].length);
+      const col = index % gameBoard[0].length;
+
+      attacker.attack(attackReceiver, row, col);
+
+      renderGameBoard(gameBoard, cells);
+
+      console.table(gameBoard);
+
+      console.log(ship);
+    });
+  });
+};
+
+attackFunction(playerGameBoard, playerCells, playerShip, computer, player);
