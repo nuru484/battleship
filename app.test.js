@@ -7,7 +7,7 @@ import {
 
 describe('Ship class', () => {
   test('properties and methods', () => {
-    const myShip = new Ship(4, 0);
+    const myShip = new Ship(4);
 
     // Properties
     expect(myShip.length).toBe(4);
@@ -61,8 +61,8 @@ describe('Gameboard class', () => {
   });
 
   test('Cannot place ship on top of another ship', () => {
-    const myShip = new Ship(3, 0);
-    const otherShip = new Ship(4, 0);
+    const myShip = new Ship(3);
+    const otherShip = new Ship(4);
 
     start.placeShip(myShip, 3, 4);
 
@@ -77,7 +77,7 @@ describe('Gameboard class', () => {
   });
 
   test('Cannot place ship if it does not fit within the row', () => {
-    const ship = new Ship(5, 0);
+    const ship = new Ship(5);
 
     expect(start.placeShip(ship, 2, 7)).toBeUndefined();
     expect(start.placeShip(ship, 2, 8)).toBeUndefined();
@@ -92,9 +92,9 @@ describe('Player class', () => {
     const player = new Player();
     player.startGame();
 
-    expect(player.gameboard.gameGrid).toHaveLength(10);
+    expect(player.gameBoard.gameGrid).toHaveLength(10);
 
-    const playerShip = player.createShip(5, 0);
+    const playerShip = player.createShip(5);
     expect(playerShip.length).toBe(5);
 
     player.placeShip(playerShip, 2, 3);
@@ -117,7 +117,7 @@ describe('Player class', () => {
   test('Attacking Already Hit Spot', () => {
     const player = new Player();
     player.startGame();
-    const playerShip = player.createShip(5, 0);
+    const playerShip = player.createShip(5);
     player.placeShip(playerShip, 2, 3);
 
     const computer = new Player();
@@ -135,7 +135,7 @@ describe('Player class', () => {
   test('Attacking Missed Spot', () => {
     const player = new Player();
     player.startGame();
-    const playerShip = player.createShip(5, 0);
+    const playerShip = player.createShip(5);
     player.placeShip(playerShip, 2, 3);
 
     const computer = new Player();
@@ -145,8 +145,8 @@ describe('Player class', () => {
     computer.attack(player, 3, 6);
 
     // Verify that the game grid remains unchanged
-    expect(player.gameboard.gameGrid[3][6]).not.toBe('hit');
-    expect(player.gameboard.gameGrid[3][6]).toBe('missed');
+    expect(player.gameBoard.gameGrid[3][6]).not.toBe('hit');
+    expect(player.gameBoard.gameGrid[3][6]).toBe('miss');
   });
 });
 

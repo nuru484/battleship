@@ -1,6 +1,6 @@
 // Ship class
 class Ship {
-  constructor(length, hitTimes) {
+  constructor(length, hitTimes = 0) {
     this.length = length;
     this.hitTimes = hitTimes;
   }
@@ -93,13 +93,13 @@ class Gameboard {
         }
       } else if (
         this.gameGrid[row][column] === 'hit' ||
-        this.gameGrid[row][column] === 'missed'
+        this.gameGrid[row][column] === 'miss'
       ) {
         return;
       }
     }
     if (typeof this.gameGrid[row][column] === 'number') {
-      this.gameGrid[row][column] = 'missed';
+      this.gameGrid[row][column] = 'miss';
     }
   }
 
@@ -115,25 +115,28 @@ class Gameboard {
 
 class Player {
   constructor() {
-    this.gameboard = null;
+    this.gameBoard = null;
   }
 
   startGame() {
-    this.gameboard = new Gameboard();
+    this.gameBoard = new Gameboard();
   }
 
-  createShip(row, column) {
-    return new Ship(row, column);
+  createShip(length) {
+    return new Ship(length);
   }
 
   placeShip(ship, row, column) {
-    if (this.gameboard) {
-      this.gameboard.placeShip(ship, row, column);
+    if (this.gameBoard) {
+      this.gameBoard.placeShip(ship, row, column);
+      return true;
     }
+    return undefined;
   }
 
   attack(opponent, row, column) {
-    opponent.gameboard.receiveAttack(row, column);
+    opponent.gameBoard.receiveAttack(row, column);
+    // return true;
   }
 }
 
@@ -151,10 +154,5 @@ const generateCoordinates = () => {
 
   return { x, y };
 };
-
-// Example usage
-const cordinates = generateCoordinates();
-console.log(cordinates.x);
-console.log(cordinates.y);
 
 export { Ship, Gameboard, Player, generateCoordinates };
