@@ -52,23 +52,35 @@ class Gameboard {
       // Check if ship can be placed
       for (let i = 0; i < ship.length; i++) {
         if (
-          this.gameGrid[row][column + i] === null ||
-          this.gameGrid[row][column + i] === 'ship'
+          this.gameGrid[row][column + i] === 'ship' ||
+          this.gameGrid[row][column + i] === ''
         ) {
-          return;
+          return false;
         }
       }
 
-      if (column + ship.length <= this.gameGrid[row].length) {
-        // Place ship
-        ship.startRow = row;
-        ship.startColumn = column;
-        for (let i = 0; i < ship.length; i++) {
-          this.gameGrid[row][column + i] = 'ship';
-        }
-        this.ships.push(ship);
+      if (column + ship.length > this.gameGrid[row].length) {
+        return false;
       }
+
+      // Place ship
+      ship.startRow = row;
+      ship.startColumn = column;
+      for (let i = 0; i < ship.length; i++) {
+        this.gameGrid[row][column + i] = 'ship';
+        if (typeof this.gameGrid[row][column + ship.length] === 'number') {
+          this.gameGrid[row][column + ship.length] = '';
+        }
+
+        if (typeof this.gameGrid[row][column - 1] === 'number') {
+          this.gameGrid[row][column - 1] = '';
+        }
+      }
+      this.ships.push(ship);
+      return true;
     }
+
+    return false;
   }
 
   receiveAttack(row, column) {
@@ -126,11 +138,11 @@ class Player {
   }
 
   placeShip(ship, row, column) {
-    if (this.gameBoard) {
-      this.gameBoard.placeShip(ship, row, column);
-      return true;
+    if (!this.gameBoard.placeShip(ship, row, column)) {
+      return false;
     }
-    return undefined;
+    this.gameBoard.placeShip(ship, row, column);
+    return true;
   }
 
   attack(opponent, row, column) {
@@ -139,13 +151,13 @@ class Player {
 }
 
 const generatedCoordinates = new Set();
-const generateCoordinates = () => {
+const generateCoordinates = (col = 10, row = 10) => {
   let x;
   let y;
 
   do {
-    x = Math.floor(Math.random() * 10);
-    y = Math.floor(Math.random() * 10);
+    x = Math.floor(Math.random() * col);
+    y = Math.floor(Math.random() * row);
   } while (generatedCoordinates.has(`${x},${y}`));
 
   generatedCoordinates.add(`${x},${y}`);

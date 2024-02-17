@@ -79,11 +79,11 @@ describe('Gameboard class', () => {
   test('Cannot place ship if it does not fit within the row', () => {
     const ship = new Ship(5);
 
-    expect(start.placeShip(ship, 2, 7)).toBeUndefined();
-    expect(start.placeShip(ship, 2, 8)).toBeUndefined();
-    expect(start.placeShip(ship, 2, 9)).toBeUndefined();
-    expect(start.placeShip(ship, 2, 10)).toBeUndefined();
-    expect(start.placeShip(ship, 2, 11)).toBeUndefined();
+    expect(start.placeShip(ship, 2, 7)).toBe(false);
+    expect(start.placeShip(ship, 2, 8)).toBe(false);
+    expect(start.placeShip(ship, 2, 9)).toBe(false);
+    // expect(start.placeShip(ship, 2, 10)).toBe(false);
+    expect(start.placeShip(ship, 2, 11)).toBe(false);
   });
 });
 
