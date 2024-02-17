@@ -39,15 +39,8 @@ const renderGameBoard = (gameBoardArray, cells) => {
   cells.forEach((cell, index) => {
     const row = Math.floor(index / gameBoardArray[0].length);
     const col = index % gameBoardArray[0].length;
-
     cell.textContent = gameBoardArray[row][col];
   });
-};
-
-const computerAttack = () => {
-  const cordinates = generateCoordinates();
-  computer.attack(player, cordinates.x, cordinates.y);
-  renderGameBoard(playerGameBoard, playerCells);
 };
 
 renderGameBoard(playerGameBoard, playerCells);
@@ -64,10 +57,15 @@ const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
       if (cell.textContent === 'miss' || cell.textContent === 'hit') {
         console.log('Cell is already being shot');
       } else {
-        computerAttack();
+        const cordinates = generateCoordinates();
+        computer.attack(player, cordinates.x, cordinates.y);
+        renderGameBoard(playerGameBoard, playerCells);
       }
 
       renderGameBoard(gameBoard, cells);
+
+      console.log(computer.gameBoard.gameOver());
+      console.log(player.gameBoard.gameOver());
     });
   });
 };
