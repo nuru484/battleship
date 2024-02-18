@@ -1,44 +1,36 @@
 import { Player, generateCoordinates } from '/src/js-files/app-logic.js';
 
-// Player instance
+// Player setup
 const player = new Player();
 player.startGame();
 const playerShip = player.createShip(5);
 player.placeShip(playerShip, 4, 5);
 const playerGameBoard = player.gameBoard.gameGrid;
 
-// Computer instance
+// Computer setup
 const computer = new Player();
 computer.startGame();
 const computerGameBoard = computer.gameBoard.gameGrid;
 
+// Place computer ships randomly
 const placeComputerShips = () => {
   const shipLengths = [5, 4, 3, 3, 2];
-
   shipLengths.forEach((length) => {
-    const ship = computer.createShip(length);
-
-    if (
-      computer.placeShip(
-        ship,
-        generateCoordinates(10).x,
-        generateCoordinates(10, 10 - length).y
-      ) === false
-    ) {
-      computer.placeShip(
-        ship,
-        generateCoordinates(10).x,
-        generateCoordinates(10, 10 - length).y
-      );
+    let placed = false;
+    while (!placed) {
+      const { x } = generateCoordinates(10);
+      const { y } = generateCoordinates(10, 10 - length);
+      placed = computer.placeShip(computer.createShip(length), x, y);
     }
   });
 };
-
 placeComputerShips();
 
+// DOM elements
 const playerTable = document.getElementById('playerTable');
 const computerTable = document.getElementById('computerTable');
 
+// Create game boards
 const createGameBoard = (table, className) => {
   for (let i = 0; i < 10; i++) {
     const row = table.insertRow();
@@ -49,25 +41,21 @@ const createGameBoard = (table, className) => {
     }
   }
 };
-
 createGameBoard(playerTable, 'playerCells');
 createGameBoard(computerTable, 'computerCells');
 
-const playerCells = document.querySelectorAll('.playerCells');
-const computerCells = document.querySelectorAll('.computerCells');
-
+// Render game boards
 const renderGameBoard = (gameBoardArray, cells) => {
   cells.forEach((cell, index) => {
     const row = Math.floor(index / gameBoardArray[0].length);
     const col = index % gameBoardArray[0].length;
-
     cell.textContent = gameBoardArray[row][col];
   });
 };
+renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
+renderGameBoard(computerGameBoard, document.querySelectorAll('.computerCells'));
 
-renderGameBoard(playerGameBoard, playerCells);
-renderGameBoard(computerGameBoard, computerCells);
-
+// Attack function
 const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
   cells.forEach((cell, index) => {
     cell.addEventListener('click', () => {
@@ -79,13 +67,19 @@ const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
       }
       const attackCordinates = generateCoordinates();
       computer.attack(player, attackCordinates.x, attackCordinates.y);
-      renderGameBoard(playerGameBoard, playerCells);
-
+      renderGameBoard(
+        playerGameBoard,
+        document.querySelectorAll('.playerCells')
+      );
       renderGameBoard(gameBoard, cells);
       computer.gameBoard.gameOver();
       player.gameBoard.gameOver();
     });
   });
 };
-
-attackFunction(computerGameBoard, computerCells, player, computer);
+attackFunction(
+  computerGameBoard,
+  document.querySelectorAll('.computerCells'),
+  player,
+  computer
+);
