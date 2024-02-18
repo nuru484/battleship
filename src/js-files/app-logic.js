@@ -112,6 +112,9 @@ class Gameboard {
     if (typeof this.gameGrid[row][column] === 'number') {
       this.gameGrid[row][column] = 'miss';
     }
+    if (this.gameGrid[row][column] === '') {
+      this.gameGrid[row][column] = 'miss';
+    }
   }
 
   gameOver() {

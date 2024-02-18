@@ -72,8 +72,8 @@ const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
         document.querySelectorAll('.playerCells')
       );
       renderGameBoard(gameBoard, cells);
-      computer.gameBoard.gameOver();
-      player.gameBoard.gameOver();
+      console.log(computer.gameBoard.gameOver());
+      console.log(player.gameBoard.gameOver());
     });
   });
 };
