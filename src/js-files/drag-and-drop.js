@@ -10,21 +10,32 @@ const dragStart = (e) => {
   }, 0);
 };
 
+const dragEnd = (e) => {
+  e.target.classList.remove('hide');
+};
+
 // Drag Start
 ships.forEach((ship) => {
   ship.addEventListener('dragstart', dragStart);
+  ship.addEventListener('dragend', dragEnd);
 });
 
 // Events on drop target
 
 // Drag enter helper function
 const dragEnter = (e) => {
+  if (e.target.textContent === 'ship') {
+    return;
+  }
   e.preventDefault();
   e.target.classList.add('drag-over');
 };
 
 // Drag over helper function
 const dragOver = (e) => {
+  if (e.target.textContent === 'ship') {
+    return;
+  }
   e.preventDefault();
   e.target.classList.add('drag-over');
 };
@@ -38,6 +49,7 @@ const dragLeave = (e) => {
 const drop = (e) => {
   e.target.classList.remove('drag-over');
   const dragable = document.querySelector('.hide');
+  e.target.textContent = '';
   e.target.append(dragable);
   dragable.classList.remove('hide');
 };
@@ -48,4 +60,8 @@ playerCells.forEach((cell) => {
   cell.addEventListener('dragover', dragOver);
   cell.addEventListener('dragleave', dragLeave);
   cell.addEventListener('drop', drop);
+
+  cell.addEventListener('drop', (e) => {
+    e.preventDefault();
+  });
 });
