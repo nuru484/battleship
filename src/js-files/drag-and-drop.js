@@ -1,3 +1,5 @@
+import { player, renderGameBoard, playerGameBoard } from './dom';
+
 const ships = document.querySelectorAll('.ship');
 const playerCells = document.querySelectorAll('.playerCells');
 
@@ -47,11 +49,25 @@ const dragLeave = (e) => {
 
 // Drop helper function
 const drop = (e) => {
+  const row = e.target.parentNode.rowIndex;
+  const col = e.target.cellIndex;
+
+  const playerShip2 = player.createShip(5);
+
+  if (player.placeShip(playerShip2, row, col) === false) {
+    e.target.classList.remove('drag-over');
+    return;
+  }
+
   e.target.classList.remove('drag-over');
   const dragable = document.querySelector('.hide');
   e.target.textContent = '';
   e.target.append(dragable);
   dragable.classList.remove('hide');
+
+  player.placeShip(playerShip2, row, col);
+
+  renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
 };
 
 // Drop target events on the cells

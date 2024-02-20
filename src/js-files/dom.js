@@ -1,11 +1,9 @@
 import { Player, generateCoordinates } from '/src/js-files/app-logic.js';
 
 // Player setup
-const player = new Player();
+export const player = new Player();
 player.startGame();
-const playerShip = player.createShip(5);
-player.placeShip(playerShip, 4, 5);
-const playerGameBoard = player.gameBoard.gameGrid;
+export const playerGameBoard = player.gameBoard.gameGrid;
 
 // Computer setup
 const computer = new Player();
@@ -17,13 +15,16 @@ const placeComputerShips = () => {
   const shipLengths = [5, 4, 3, 3, 2];
   shipLengths.forEach((length) => {
     let placed = false;
+
     while (!placed) {
-      const { x } = generateCoordinates(10);
-      const { y } = generateCoordinates(10, 10 - length);
+      const x = Math.floor(Math.random() * 10);
+      const y = Math.floor(Math.random() * length);
+
       placed = computer.placeShip(computer.createShip(length), x, y);
     }
   });
 };
+
 placeComputerShips();
 
 // DOM elements
@@ -45,7 +46,7 @@ createGameBoard(playerTable, 'playerCells');
 createGameBoard(computerTable, 'computerCells');
 
 // Render game boards
-const renderGameBoard = (gameBoardArray, cells) => {
+export const renderGameBoard = (gameBoardArray, cells) => {
   cells.forEach((cell, index) => {
     const row = Math.floor(index / gameBoardArray[0].length);
     const col = index % gameBoardArray[0].length;
@@ -61,22 +62,29 @@ const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
     cell.addEventListener('click', () => {
       const row = Math.floor(index / gameBoard[0].length);
       const col = index % gameBoard[0].length;
+
       attacker.attack(attackReceiver, row, col);
+
       if (cell.textContent === 'miss' || cell.textContent === 'hit') {
         return;
       }
-      const attackCordinates = generateCoordinates();
-      computer.attack(player, attackCordinates.x, attackCordinates.y);
+
+      const { x, y } = generateCoordinates();
+
+      computer.attack(player, x, y);
+
+      computer.gameBoard.gameOver();
+      player.gameBoard.gameOver();
+
       renderGameBoard(
         playerGameBoard,
         document.querySelectorAll('.playerCells')
       );
       renderGameBoard(gameBoard, cells);
-      console.log(computer.gameBoard.gameOver());
-      console.log(player.gameBoard.gameOver());
     });
   });
 };
+
 attackFunction(
   computerGameBoard,
   document.querySelectorAll('.computerCells'),

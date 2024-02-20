@@ -149,7 +149,9 @@ class Player {
   }
 
   attack(opponent, row, column) {
-    opponent.gameBoard.receiveAttack(row, column);
+    if (this.gameBoard) {
+      opponent.gameBoard.receiveAttack(row, column);
+    }
   }
 }
 
