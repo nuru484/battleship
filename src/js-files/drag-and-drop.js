@@ -83,6 +83,11 @@ const dragStart = (e) => {
   }, 0);
 };
 
+// Prevent default action in touch event handlers
+const preventDefault = (e) => {
+  e.preventDefault();
+};
+
 // Drag end event handler
 const dragEnd = (e) => {
   e.target.classList.remove('hide-dragable');
@@ -90,8 +95,14 @@ const dragEnd = (e) => {
 
 // Attach drag event handlers to ships
 playerShips.forEach((ship) => {
+  // Mouse events
   ship.addEventListener('dragstart', dragStart);
   ship.addEventListener('dragend', dragEnd);
+
+  // Touch events
+  ship.addEventListener('touchstart', dragStart);
+  ship.addEventListener('touchmove', preventDefault);
+  ship.addEventListener('touchend', dragEnd);
 });
 
 // Drag enter event handler
@@ -146,6 +157,7 @@ const drop = (e) => {
 
 // Attach drag and drop event handlers to player cells
 playerCells.forEach((cell) => {
+  // Mouse events
   cell.addEventListener('dragenter', dragEnter);
   cell.addEventListener('dragover', dragOver);
   cell.addEventListener('dragleave', dragLeave);
@@ -153,4 +165,9 @@ playerCells.forEach((cell) => {
   cell.addEventListener('drop', (e) => {
     e.preventDefault();
   });
+
+  // Touch events
+  cell.addEventListener('touchstart', dragEnter);
+  cell.addEventListener('touchmove', preventDefault);
+  cell.addEventListener('touchend', drop);
 });
