@@ -1,32 +1,50 @@
+import battleshipX from '../assets/battleshipX.svg';
+import carrierX from '../assets/carrierX.svg';
+import cruiserX from '../assets/cruiserX.svg';
+import destroyerX from '../assets/destroyerX.svg';
+import submarineX from '../assets/submarineX.svg';
+
 import { player, renderGameBoard, playerGameBoard } from './dom';
 
 //  ship lengths in an array along with corresponding IDs
 const shipData = [
-  { length: 5, id: 'ship5' },
-  { length: 4, id: 'ship4' },
-  { length: 3, id: 'ship3first' },
-  { length: 3, id: 'ship3second' },
-  { length: 2, id: 'ship2' },
+  { length: 5, id: 'ship5', shipUrl: battleshipX, shipName: 'Battleship (5f)' },
+  { length: 4, id: 'ship4', shipUrl: carrierX, shipName: 'Carrier (4f)' },
+  { length: 3, id: 'ship3first', shipUrl: cruiserX, shipName: 'Cruiser (3f)' },
+  {
+    length: 3,
+    id: 'ship3second',
+    shipUrl: destroyerX,
+    shipName: 'Submarine (3f)',
+  },
+  { length: 2, id: 'ship2', shipUrl: submarineX, shipName: 'Destroyer (2f)' },
 ];
 
 // Function to create ships based on ship lengths and IDs
 const createHumanPlayerShips = () => {
-  const shipsContainer = document.querySelector('.player-ships-class');
+  const allShipsContainer = document.querySelector('.player-ships-class');
   shipData.forEach((data) => {
-    const ship = document.createElement('div');
-    ship.className = 'ship';
+    const shipContainer = document.createElement('div');
+    shipContainer.className = 'ship-container';
+    shipContainer.id = data.id;
+
+    const ship = document.createElement('img');
     ship.draggable = true;
-    ship.dataset.length = data.length; //  data-length attribute
-    ship.textContent = data.length; //  content to display ship length
-    ship.id = data.id; //  ship ID
-    shipsContainer.append(ship);
+    ship.src = data.shipUrl;
+    ship.dataset.length = data.length;
+
+    const shipName = document.createElement('p');
+    shipName.textContent = data.shipName;
+
+    shipContainer.append(ship, shipName);
+    allShipsContainer.append(shipContainer);
   });
 };
 
 //  Function call to create ships
 createHumanPlayerShips();
 
-const ships = document.querySelectorAll('.ship');
+const ships = document.querySelectorAll('.ship-container');
 const playerCells = document.querySelectorAll('.playerCells');
 
 // Events on dragged elements
@@ -82,20 +100,19 @@ const drop = (e) => {
 
   const shipLength = parseInt(dragable.dataset.length, 10);
 
-  const playerShip2 = player.createShip(shipLength);
+  const playerShip = player.createShip(shipLength);
 
-  if (player.placeShip(playerShip2, row, col) === false) {
+  if (player.placeShip(playerShip, row, col) === false) {
     e.target.classList.remove('drag-over');
     return;
   }
 
   e.target.classList.remove('drag-over');
-
   e.target.textContent = '';
-  e.target.append(dragable);
   dragable.classList.remove('hide');
+  dragable.parentNode.textContent = '';
 
-  player.placeShip(playerShip2, row, col);
+  player.placeShip(playerShip, row, col);
   renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
 };
 
