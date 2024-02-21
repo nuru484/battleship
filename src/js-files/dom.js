@@ -50,6 +50,7 @@ export const renderGameBoard = (gameBoardArray, cells) => {
   cells.forEach((cell, index) => {
     const row = Math.floor(index / gameBoardArray[0].length);
     const col = index % gameBoardArray[0].length;
+
     cell.textContent = gameBoardArray[row][col];
   });
 };

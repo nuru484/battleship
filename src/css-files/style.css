@@ -6,6 +6,7 @@
 
 body {
   height: 100dvh;
+  font-size: clamp(0.5rem, 1dvw, 1.5rem);
 }
 
 .main-container {
@@ -32,7 +33,6 @@ td {
   text-align: center;
   width: clamp(1.5rem, 3.5dvw, 3rem);
   height: clamp(1.5rem, 3.5dvw, 3rem);
-  /* color: white; */
 }
 
 .player-ships-class {
@@ -52,6 +52,7 @@ td {
   border-radius: 8px;
 
   /* color: white; */
+
   font-size: 0.8rem;
   text-align: center;
   cursor: pointer;
