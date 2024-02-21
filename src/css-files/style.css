@@ -71,3 +71,11 @@ td {
   background-color: aqua;
   color: aqua;
 }
+
+.computer-table-container {
+  display: none;
+}
+
+.reveal-computer-tabel-container {
+  display: block;
+}

@@ -1,12 +1,14 @@
+// Import ship images
 import battleshipX from '../assets/battleshipX.svg';
 import carrierX from '../assets/carrierX.svg';
 import cruiserX from '../assets/cruiserX.svg';
 import destroyerX from '../assets/destroyerX.svg';
 import submarineX from '../assets/submarineX.svg';
 
+// Import player and game board related variables and functions
 import { player, renderGameBoard, playerGameBoard } from './dom';
 
-//  ship lengths in an array along with corresponding IDs
+// Define ship data including length, ID, image URL, and name
 const shipData = [
   { length: 5, id: 'ship5', shipUrl: battleshipX, shipName: 'Battleship (5f)' },
   { length: 4, id: 'ship4', shipUrl: carrierX, shipName: 'Carrier (4f)' },
@@ -20,7 +22,7 @@ const shipData = [
   { length: 2, id: 'ship2', shipUrl: submarineX, shipName: 'Destroyer (2f)' },
 ];
 
-// Function to create ships based on ship lengths and IDs
+// Function to create human player ships
 const createHumanPlayerShips = () => {
   const allShipsContainer = document.querySelector('.player-ships-class');
   shipData.forEach((data) => {
@@ -41,13 +43,15 @@ const createHumanPlayerShips = () => {
   });
 };
 
-//  Function call to create ships
+// Initialize player ships
 createHumanPlayerShips();
 
-const ships = document.querySelectorAll('.ship-container');
+// Get ships and player cells
+const playerShips = document.querySelectorAll('.ship-container');
 const playerCells = document.querySelectorAll('.playerCells');
 
-const trial = () => {
+// Function to highlight cells with ships
+const highlightShipsOnBoard = () => {
   playerCells.forEach((playerCell) => {
     if (playerCell.textContent === 'ship') {
       playerCell.classList.add('togo');
@@ -55,28 +59,42 @@ const trial = () => {
   });
 };
 
-// Events on dragged elements
+const revealComputerTable = () => {
+  let numberOfShipsPlaced = 0;
 
-// Drag start helper function.
+  playerCells.forEach((playerCell) => {
+    if (playerCell.textContent === 'ship') {
+      numberOfShipsPlaced += 1;
+    }
+  });
+
+  if (numberOfShipsPlaced === 17) {
+    const computerTableContainer = document.querySelector(
+      '.computer-table-container'
+    );
+    computerTableContainer.classList.add('reveal-computer-tabel-container');
+  }
+};
+
+// Drag start event handler
 const dragStart = (e) => {
   setTimeout(() => {
     e.target.classList.add('hide');
   }, 0);
 };
 
+// Drag end event handler
 const dragEnd = (e) => {
   e.target.classList.remove('hide');
 };
 
-// Drag Start
-ships.forEach((ship) => {
+// Attach drag event handlers to ships
+playerShips.forEach((ship) => {
   ship.addEventListener('dragstart', dragStart);
   ship.addEventListener('dragend', dragEnd);
 });
 
-// Events on drop target
-
-// Drag enter helper function
+// Drag enter event handler
 const dragEnter = (e) => {
   if (e.target.textContent === 'ship') {
     return;
@@ -85,7 +103,7 @@ const dragEnter = (e) => {
   e.target.classList.add('drag-over');
 };
 
-// Drag over helper function
+// Drag over event handler
 const dragOver = (e) => {
   if (e.target.textContent === 'ship') {
     return;
@@ -94,12 +112,12 @@ const dragOver = (e) => {
   e.target.classList.add('drag-over');
 };
 
-// Drag leave helper function
+// Drag leave event handler
 const dragLeave = (e) => {
   e.target.classList.remove('drag-over');
 };
 
-// Drop helper function
+// Drop event handler
 const drop = (e) => {
   const row = e.target.parentNode.rowIndex;
   const col = e.target.cellIndex;
@@ -107,7 +125,6 @@ const drop = (e) => {
   const dragable = document.querySelector('.hide');
 
   const shipLength = parseInt(dragable.dataset.length, 10);
-
   const playerShip = player.createShip(shipLength);
 
   if (player.placeShip(playerShip, row, col) === false) {
@@ -123,16 +140,16 @@ const drop = (e) => {
   player.placeShip(playerShip, row, col);
   renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
 
-  trial();
+  highlightShipsOnBoard();
+  revealComputerTable();
 };
 
-// Drop target events on the cells
+// Attach drag and drop event handlers to player cells
 playerCells.forEach((cell) => {
   cell.addEventListener('dragenter', dragEnter);
   cell.addEventListener('dragover', dragOver);
   cell.addEventListener('dragleave', dragLeave);
   cell.addEventListener('drop', drop);
-
   cell.addEventListener('drop', (e) => {
     e.preventDefault();
   });

@@ -15,11 +15,9 @@ const placeComputerShips = () => {
   const shipLengths = [5, 4, 3, 3, 2];
   shipLengths.forEach((length) => {
     let placed = false;
-
     while (!placed) {
       const x = Math.floor(Math.random() * 10);
       const y = Math.floor(Math.random() * length);
-
       placed = computer.placeShip(computer.createShip(length), x, y);
     }
   });
@@ -32,7 +30,7 @@ const playerTable = document.getElementById('playerTable');
 const computerTable = document.getElementById('computerTable');
 
 // Create game boards
-const createGameBoard = (table, className) => {
+export const createGameBoard = (table, className) => {
   for (let i = 0; i < 10; i++) {
     const row = table.insertRow();
     for (let j = 0; j < 10; j++) {
@@ -42,6 +40,7 @@ const createGameBoard = (table, className) => {
     }
   }
 };
+
 createGameBoard(playerTable, 'playerCells');
 createGameBoard(computerTable, 'computerCells');
 
@@ -50,60 +49,65 @@ export const renderGameBoard = (gameBoardArray, cells) => {
   cells.forEach((cell, index) => {
     const row = Math.floor(index / gameBoardArray[0].length);
     const col = index % gameBoardArray[0].length;
-
     cell.textContent = gameBoardArray[row][col];
   });
 };
+
 renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
 renderGameBoard(computerGameBoard, document.querySelectorAll('.computerCells'));
 
+const computerPlayerTurn = () => {
+  const { x, y } = generateCoordinates();
+  computer.attack(player, x, y);
+  player.gameBoard.gameOver();
+
+  document.querySelectorAll('.playerCells').forEach((playerCell) => {
+    if (playerCell.textContent === 'hit') {
+      playerCell.style.backgroundColor = 'red';
+    }
+    if (playerCell.textContent === 'miss') {
+      playerCell.style.backgroundColor = 'yellow';
+    }
+
+    renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
+  });
+};
+
 // Attack function
-const computerAttackFunction = (gameBoard, cells, attacker, attackReceiver) => {
-  cells.forEach((cell, index) => {
-    cell.addEventListener('click', () => {
+const humanPlayerAttackFunction = (
+  gameBoard,
+  computerCells,
+  attacker,
+  attackReceiver
+) => {
+  computerCells.forEach((computerCell, index) => {
+    computerCell.addEventListener('click', () => {
       const row = Math.floor(index / gameBoard[0].length);
       const col = index % gameBoard[0].length;
 
       attacker.attack(attackReceiver, row, col);
 
-      if (cell.textContent === 'miss' || cell.textContent === 'hit') {
+      if (
+        computerCell.textContent === 'miss' ||
+        computerCell.textContent === 'hit'
+      ) {
         return;
       }
 
-      const { x, y } = generateCoordinates();
-
-      computer.attack(player, x, y);
-
       computer.gameBoard.gameOver();
-      player.gameBoard.gameOver();
+      computerCell.style.backgroundColor = 'yellow';
 
-      cell.style.backgroundColor = 'yellow';
-
-      if (cell.textContent === 'ship') {
-        cell.style.backgroundColor = 'red';
-        cell.style.border = 'none';
+      if (computerCell.textContent === 'ship') {
+        computerCell.style.backgroundColor = 'red';
       }
 
-      renderGameBoard(
-        playerGameBoard,
-        document.querySelectorAll('.playerCells')
-      );
-      renderGameBoard(gameBoard, cells);
-
-      document.querySelectorAll('.playerCells').forEach((playerCell) => {
-        if (playerCell.textContent === 'hit') {
-          playerCell.style.backgroundColor = 'red';
-          playerCell.style.border = 'none';
-        }
-        if (playerCell.textContent === 'miss') {
-          playerCell.style.backgroundColor = 'yellow';
-        }
-      });
+      renderGameBoard(gameBoard, computerCells);
+      computerPlayerTurn();
     });
   });
 };
 
-computerAttackFunction(
+humanPlayerAttackFunction(
   computerGameBoard,
   document.querySelectorAll('.computerCells'),
   player,
