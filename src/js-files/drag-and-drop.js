@@ -54,7 +54,7 @@ const playerCells = document.querySelectorAll('.playerCells');
 const highlightShipsOnBoard = () => {
   playerCells.forEach((playerCell) => {
     if (playerCell.textContent === 'ship') {
-      playerCell.classList.add('togo');
+      playerCell.classList.add('ship-position');
     }
   });
 };
@@ -79,13 +79,13 @@ const revealComputerTable = () => {
 // Drag start event handler
 const dragStart = (e) => {
   setTimeout(() => {
-    e.target.classList.add('hide');
+    e.target.classList.add('hide-dragable');
   }, 0);
 };
 
 // Drag end event handler
 const dragEnd = (e) => {
-  e.target.classList.remove('hide');
+  e.target.classList.remove('hide-dragable');
 };
 
 // Attach drag event handlers to ships
@@ -122,7 +122,7 @@ const drop = (e) => {
   const row = e.target.parentNode.rowIndex;
   const col = e.target.cellIndex;
 
-  const dragable = document.querySelector('.hide');
+  const dragable = document.querySelector('.hide-dragable');
 
   const shipLength = parseInt(dragable.dataset.length, 10);
   const playerShip = player.createShip(shipLength);
@@ -134,8 +134,8 @@ const drop = (e) => {
 
   e.target.classList.remove('drag-over');
   e.target.textContent = '';
-  dragable.classList.remove('hide');
-  dragable.parentNode.textContent = '';
+  dragable.classList.remove('hide-dragable');
+  dragable.parentNode.classList.add('hide-ship-container');
 
   player.placeShip(playerShip, row, col);
   renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));

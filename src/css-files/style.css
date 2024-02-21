@@ -54,7 +54,9 @@ td {
 }
 
 /* Drag and drop styles */
-.hide {
+.hide-dragable,
+.computer-table-container,
+.hide-ship-container {
   display: none;
 }
 
@@ -67,13 +69,9 @@ td {
   color: white;
 }
 
-.togo {
-  background-color: aqua;
-  color: aqua;
-}
-
-.computer-table-container {
-  display: none;
+.ship-position {
+  background-color: green;
+  color: green;
 }
 
 .reveal-computer-tabel-container {

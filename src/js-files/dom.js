@@ -56,6 +56,8 @@ export const renderGameBoard = (gameBoardArray, cells) => {
 renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
 renderGameBoard(computerGameBoard, document.querySelectorAll('.computerCells'));
 
+let humanTurn = true;
+
 const computerPlayerTurn = () => {
   const { x, y } = generateCoordinates();
   computer.attack(player, x, y);
@@ -70,6 +72,8 @@ const computerPlayerTurn = () => {
     }
 
     renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
+
+    humanTurn = true;
   });
 };
 
@@ -82,6 +86,8 @@ const humanPlayerAttackFunction = (
 ) => {
   computerCells.forEach((computerCell, index) => {
     computerCell.addEventListener('click', () => {
+      if (!humanTurn) return;
+
       const row = Math.floor(index / gameBoard[0].length);
       const col = index % gameBoard[0].length;
 
@@ -102,7 +108,10 @@ const humanPlayerAttackFunction = (
       }
 
       renderGameBoard(gameBoard, computerCells);
-      computerPlayerTurn();
+
+      setTimeout(computerPlayerTurn, 2000);
+
+      humanTurn = false;
     });
   });
 };
