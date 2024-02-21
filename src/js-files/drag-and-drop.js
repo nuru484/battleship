@@ -47,6 +47,14 @@ createHumanPlayerShips();
 const ships = document.querySelectorAll('.ship-container');
 const playerCells = document.querySelectorAll('.playerCells');
 
+const trial = () => {
+  playerCells.forEach((playerCell) => {
+    if (playerCell.textContent === 'ship') {
+      playerCell.classList.add('togo');
+    }
+  });
+};
+
 // Events on dragged elements
 
 // Drag start helper function.
@@ -114,6 +122,8 @@ const drop = (e) => {
 
   player.placeShip(playerShip, row, col);
   renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
+
+  trial();
 };
 
 // Drop target events on the cells

@@ -58,7 +58,7 @@ renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
 renderGameBoard(computerGameBoard, document.querySelectorAll('.computerCells'));
 
 // Attack function
-const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
+const computerAttackFunction = (gameBoard, cells, attacker, attackReceiver) => {
   cells.forEach((cell, index) => {
     cell.addEventListener('click', () => {
       const row = Math.floor(index / gameBoard[0].length);
@@ -77,16 +77,33 @@ const attackFunction = (gameBoard, cells, attacker, attackReceiver) => {
       computer.gameBoard.gameOver();
       player.gameBoard.gameOver();
 
+      cell.style.backgroundColor = 'yellow';
+
+      if (cell.textContent === 'ship') {
+        cell.style.backgroundColor = 'red';
+        cell.style.border = 'none';
+      }
+
       renderGameBoard(
         playerGameBoard,
         document.querySelectorAll('.playerCells')
       );
       renderGameBoard(gameBoard, cells);
+
+      document.querySelectorAll('.playerCells').forEach((playerCell) => {
+        if (playerCell.textContent === 'hit') {
+          playerCell.style.backgroundColor = 'red';
+          playerCell.style.border = 'none';
+        }
+        if (playerCell.textContent === 'miss') {
+          playerCell.style.backgroundColor = 'yellow';
+        }
+      });
     });
   });
 };
 
-attackFunction(
+computerAttackFunction(
   computerGameBoard,
   document.querySelectorAll('.computerCells'),
   player,
