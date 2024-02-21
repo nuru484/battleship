@@ -5,6 +5,7 @@
 }
 
 body {
+  padding: 2rem;
   height: 100dvh;
   font-size: clamp(0.5rem, 1dvw, 1.5rem);
 }
@@ -21,6 +22,7 @@ body {
 table {
   border-collapse: collapse;
   width: max-content;
+  margin: 1dvw;
 }
 
 table,
@@ -31,8 +33,8 @@ td {
 
 td {
   text-align: center;
-  width: clamp(1.5rem, 3.5dvw, 3rem);
-  height: clamp(1.5rem, 3.5dvw, 3rem);
+  width: clamp(1.8rem, 4dvw, 3rem);
+  height: clamp(1.8rem, 4dvw, 3rem);
 }
 
 .ship-container {
@@ -48,9 +50,17 @@ td {
   cursor: pointer;
 }
 
+#player-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1dvw;
+}
+
 .ship-container img {
   max-width: 100%;
-  height: 50px;
+  height: 50%;
 }
 
 /* Drag and drop styles */
