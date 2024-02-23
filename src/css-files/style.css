@@ -1,9 +1,10 @@
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-  padding: 2rem;
   height: 100dvh;
   font-size: clamp(0.5rem, 1dvw, 1.5rem);
 }
@@ -36,6 +37,8 @@ td {
 }
 
 .ship-container {
+  text-align: center;
+  align-items: center;
   background-color: rgba(230, 227, 225, 0.852);
   margin: 5px;
   padding: 5px;
@@ -44,7 +47,6 @@ td {
   border: 2px solid black;
   border-radius: 8px;
   font-size: 0.8rem;
-  text-align: center;
   cursor: pointer;
 }
 

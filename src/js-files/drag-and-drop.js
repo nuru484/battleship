@@ -30,15 +30,15 @@ const createHumanPlayerShips = () => {
     shipContainer.className = 'ship-container';
     shipContainer.id = data.id;
 
+    const shipName = document.createElement('p');
+    shipName.textContent = data.shipName;
+
     const ship = document.createElement('img');
     ship.draggable = true;
     ship.src = data.shipUrl;
     ship.dataset.length = data.length;
 
-    const shipName = document.createElement('p');
-    shipName.textContent = data.shipName;
-
-    shipContainer.append(ship, shipName);
+    shipContainer.append(shipName, ship);
     allShipsContainer.append(shipContainer);
   });
 };
@@ -157,34 +157,18 @@ playerCells.forEach((cell) => {
   });
 });
 
+// Variable to store original ship position
+let originalShipPosition = {};
+
 playerShips.forEach((ship) => {
   ship.addEventListener('touchstart', (event) => {
     event.preventDefault();
+
     if (event.target.hasAttribute('draggable')) {
-      [...event.changedTouches].forEach((touch) => {
-        event.target.style.top = `${touch.pageY}px`;
-        event.target.style.left = `${touch.pageX}px`;
-      });
-    }
-  });
-});
-
-playerShips.forEach((ship) => {
-  ship.addEventListener('touchmove', (e) => {
-    if (e.target.hasAttribute('draggable')) {
-      const touchLocation = e.targetTouches[0];
-
-      e.target.style.position = 'absolute';
-
-      e.target.style.width = '100px';
-
-      e.target.style.height = '50px';
-
-      e.target.style.left = touchLocation.pageX + 'px';
-
-      e.target.style.top = touchLocation.pageY + 'px';
-
-      // console.log(touchLocation);
+      originalShipPosition = {
+        x: event.target.offsetLeft,
+        y: event.target.offsetTop,
+      };
     }
   });
 });
@@ -217,6 +201,9 @@ playerShips.forEach((ship) => {
       const playerShip = player.createShip(shipLength);
 
       if (player.placeShip(playerShip, row, col) === false) {
+        e.target.style.left = `${originalShipPosition.x}px`;
+        e.target.style.top = `${originalShipPosition.y}px`;
+
         return;
       }
 
@@ -231,6 +218,20 @@ playerShips.forEach((ship) => {
       );
       highlightShipsOnBoard();
       revealComputerTable();
+    }
+  });
+});
+
+playerShips.forEach((ship) => {
+  ship.addEventListener('touchmove', (e) => {
+    if (e.target.hasAttribute('draggable')) {
+      const touchLocation = e.targetTouches[0];
+
+      e.target.style.position = 'absolute';
+      e.target.style.width = '100px';
+      e.target.style.height = '50px';
+      e.target.style.left = `${touchLocation.pageX}px`;
+      e.target.style.top = `${touchLocation.pageY}px`;
     }
   });
 });
