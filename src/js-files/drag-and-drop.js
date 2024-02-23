@@ -83,11 +83,6 @@ const dragStart = (e) => {
   }, 0);
 };
 
-// Prevent default action in touch event handlers
-const preventDefault = (e) => {
-  e.preventDefault();
-};
-
 // Drag end event handler
 const dragEnd = (e) => {
   e.target.classList.remove('hide-dragable');
@@ -98,11 +93,6 @@ playerShips.forEach((ship) => {
   // Mouse events
   ship.addEventListener('dragstart', dragStart);
   ship.addEventListener('dragend', dragEnd);
-
-  // Touch events
-  ship.addEventListener('touchstart', dragStart);
-  ship.addEventListener('touchmove', preventDefault);
-  ship.addEventListener('touchend', dragEnd);
 });
 
 // Drag enter event handler
@@ -165,9 +155,16 @@ playerCells.forEach((cell) => {
   cell.addEventListener('drop', (e) => {
     e.preventDefault();
   });
+});
 
-  // Touch events
-  cell.addEventListener('touchstart', dragEnter);
-  cell.addEventListener('touchmove', preventDefault);
-  cell.addEventListener('touchend', drop);
+playerShips.forEach((ship) => {
+  ship.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    if (event.target.hasAttribute('draggable')) {
+      [...event.changedTouches].forEach((touch) => {
+        event.target.style.top = `${touch.pageY}px`;
+        event.target.style.left = `${touch.pageX}px`;
+      });
+    }
+  });
 });
