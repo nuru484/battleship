@@ -168,3 +168,69 @@ playerShips.forEach((ship) => {
     }
   });
 });
+
+playerShips.forEach((ship) => {
+  ship.addEventListener('touchmove', (e) => {
+    if (e.target.hasAttribute('draggable')) {
+      const touchLocation = e.targetTouches[0];
+
+      e.target.style.position = 'absolute';
+
+      e.target.style.width = '100px';
+
+      e.target.style.height = '50px';
+
+      e.target.style.left = touchLocation.pageX + 'px';
+
+      e.target.style.top = touchLocation.pageY + 'px';
+
+      // console.log(touchLocation);
+    }
+  });
+});
+
+playerShips.forEach((ship) => {
+  ship.addEventListener('touchend', (e) => {
+    if (e.target.hasAttribute('draggable')) {
+      const touchLocation = e.changedTouches[0];
+      const gridCells = document.querySelectorAll('.playerCells');
+
+      // Calculate the row and column indices based on touch position
+      let row;
+      let col;
+
+      gridCells.forEach((cell, index) => {
+        const rect = cell.getBoundingClientRect();
+        if (
+          touchLocation.clientX >= rect.left &&
+          touchLocation.clientX <= rect.right &&
+          touchLocation.clientY >= rect.top &&
+          touchLocation.clientY <= rect.bottom
+        ) {
+          row = Math.floor(index / 10); // Assuming gridSize is defined elsewhere
+          col = index % 10; // Assuming gridSize is defined elsewhere
+        }
+      });
+
+      const shipLength = parseInt(e.target.dataset.length, 10);
+
+      const playerShip = player.createShip(shipLength);
+
+      if (player.placeShip(playerShip, row, col) === false) {
+        return;
+      }
+
+      player.placeShip(playerShip, row, col);
+
+      e.target.parentNode.classList.add('hide-ship-container');
+
+      player.placeShip(playerShip, row, col);
+      renderGameBoard(
+        playerGameBoard,
+        document.querySelectorAll('.playerCells')
+      );
+      highlightShipsOnBoard();
+      revealComputerTable();
+    }
+  });
+});
