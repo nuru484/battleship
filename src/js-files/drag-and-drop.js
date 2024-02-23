@@ -201,9 +201,8 @@ playerShips.forEach((ship) => {
       const playerShip = player.createShip(shipLength);
 
       if (player.placeShip(playerShip, row, col) === false) {
-        e.target.style.left = `${originalShipPosition.x}px`;
-        e.target.style.top = `${originalShipPosition.y}px`;
-
+        e.target.style.position = 'static';
+        ship.append(e.target);
         return;
       }
 
