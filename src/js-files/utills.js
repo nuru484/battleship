@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 const generatedCoordinates = new Set();
 const generateCoordinates = (col = 10, row = 10) => {
   let x;
@@ -61,9 +62,39 @@ const revealComputerTable = (playerCells) => {
   }
 };
 
+function handleGameOver(player) {
+  if (player.gameBoard.gameOver()) {
+    const gameOverMessage = 'Game Over!';
+    const restartButtonText = 'Restart Game';
+
+    const gameOverContainer = document.createElement('div');
+    gameOverContainer.classList.add('game-over-container');
+
+    const para = document.createElement('p');
+    para.textContent = gameOverMessage;
+
+    const restartButton = document.createElement('button');
+    restartButton.textContent = restartButtonText;
+    restartButton.addEventListener('click', () => {
+      location.reload();
+    });
+
+    gameOverContainer.appendChild(para);
+    gameOverContainer.appendChild(restartButton);
+
+    const playerDetails = document.getElementById('player-details');
+    const computerDetails = document.getElementById('computer-details');
+    playerDetails.style.display = 'none';
+    computerDetails.style.display = 'none';
+
+    document.body.appendChild(gameOverContainer);
+  }
+}
+
 export {
   generateCoordinates,
   createHumanPlayerShips,
   highlightPlayerShipsOnBoard,
   revealComputerTable,
+  handleGameOver,
 };

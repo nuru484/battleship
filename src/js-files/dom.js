@@ -1,5 +1,5 @@
 import { Player } from '/src/js-files/app-logic.js';
-import { generateCoordinates } from '/src/js-files/utills.js';
+import { generateCoordinates, handleGameOver } from '/src/js-files/utills.js';
 
 // Player setup
 export const player = new Player();
@@ -62,7 +62,7 @@ let humanTurn = true;
 const computerPlayerTurn = () => {
   const { x, y } = generateCoordinates();
   computer.attack(player, x, y);
-  player.gameBoard.gameOver();
+  handleGameOver(player);
 
   document.querySelectorAll('.playerCells').forEach((playerCell) => {
     if (playerCell.textContent === 'hit') {
@@ -101,7 +101,7 @@ const humanPlayerAttackFunction = (
         return;
       }
 
-      computer.gameBoard.gameOver();
+      handleGameOver(computer);
       computerCell.style.backgroundColor = 'yellow';
 
       if (computerCell.textContent === 'ship') {
@@ -110,9 +110,9 @@ const humanPlayerAttackFunction = (
 
       renderGameBoard(gameBoard, computerCells);
 
-      setTimeout(computerPlayerTurn, 2000);
-
       humanTurn = false;
+
+      setTimeout(computerPlayerTurn, 1000);
     });
   });
 };

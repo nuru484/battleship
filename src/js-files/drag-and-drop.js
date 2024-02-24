@@ -118,22 +118,6 @@ playerCells.forEach((cell) => {
   });
 });
 
-// Variable to store original ship position
-let originalShipPosition = {};
-
-playerShips.forEach((ship) => {
-  ship.addEventListener('touchstart', (event) => {
-    event.preventDefault();
-
-    if (event.target.hasAttribute('draggable')) {
-      originalShipPosition = {
-        x: event.target.offsetLeft,
-        y: event.target.offsetTop,
-      };
-    }
-  });
-});
-
 playerShips.forEach((ship) => {
   ship.addEventListener('touchend', (e) => {
     if (e.target.hasAttribute('draggable')) {

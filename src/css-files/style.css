@@ -88,3 +88,35 @@ td {
 .reveal-computer-tabel-container {
   display: block;
 }
+
+.game-over-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.game-over-container p {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.game-over-container button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.game-over-container button:hover {
+  background-color: #45a049;
+}

@@ -121,9 +121,9 @@ class Gameboard {
     const gameIsOver = this.ships.every((ship) => ship.isSunk());
 
     if (gameIsOver) {
-      return 'Game Over';
+      return true;
     }
-    return undefined;
+    return false;
   }
 }
 

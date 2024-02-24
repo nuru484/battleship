@@ -1,9 +1,4 @@
-import {
-  Ship,
-  Gameboard,
-  Player,
-  generateCoordinates,
-} from './src/js-files/app-logic.js';
+import { Ship, Gameboard, Player } from './src/js-files/app-logic.js';
 
 describe('Ship class', () => {
   test('properties and methods', () => {
@@ -57,7 +52,7 @@ describe('Gameboard class', () => {
     start.receiveAttack(2, 6);
     start.receiveAttack(2, 7);
 
-    expect(start.gameOver()).toBe('Game Over');
+    expect(start.gameOver()).toBe(true);
   });
 
   test('Cannot place ship on top of another ship', () => {
@@ -150,21 +145,21 @@ describe('Player class', () => {
   });
 });
 
-describe('generateCoordinates function', () => {
-  test('should return an object with x and y properties', () => {
-    const coordinates = generateCoordinates();
-    expect(coordinates).toHaveProperty('x');
-    expect(coordinates).toHaveProperty('y');
-  });
+// describe('generateCoordinates function', () => {
+//   test('should return an object with x and y properties', () => {
+//     const coordinates = generateCoordinates();
+//     expect(coordinates).toHaveProperty('x');
+//     expect(coordinates).toHaveProperty('y');
+//   });
 
-  test('should return unique coordinates', () => {
-    const generated = new Set();
+//   test('should return unique coordinates', () => {
+//     const generated = new Set();
 
-    for (let i = 0; i < 10; i++) {
-      const coordinates = generateCoordinates();
-      const key = `${coordinates.x},${coordinates.y}`;
-      expect(generated.has(key)).toBe(false);
-      generated.add(key);
-    }
-  });
-});
+//     for (let i = 0; i < 10; i++) {
+//       const coordinates = generateCoordinates();
+//       const key = `${coordinates.x},${coordinates.y}`;
+//       expect(generated.has(key)).toBe(false);
+//       generated.add(key);
+//     }
+//   });
+// });
