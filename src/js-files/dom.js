@@ -1,4 +1,5 @@
-import { Player, generateCoordinates } from '/src/js-files/app-logic.js';
+import { Player } from '/src/js-files/app-logic.js';
+import { generateCoordinates } from '/src/js-files/utills.js';
 
 // Player setup
 export const player = new Player();

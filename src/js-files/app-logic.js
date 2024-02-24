@@ -155,19 +155,4 @@ class Player {
   }
 }
 
-const generatedCoordinates = new Set();
-const generateCoordinates = (col = 10, row = 10) => {
-  let x;
-  let y;
-
-  do {
-    x = Math.floor(Math.random() * col);
-    y = Math.floor(Math.random() * row);
-  } while (generatedCoordinates.has(`${x},${y}`));
-
-  generatedCoordinates.add(`${x},${y}`);
-
-  return { x, y };
-};
-
-export { Ship, Gameboard, Player, generateCoordinates };
+export { Ship, Gameboard, Player };

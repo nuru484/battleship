@@ -8,6 +8,13 @@ import submarineX from '../assets/submarineX.svg';
 // Import player and game board related variables and functions
 import { player, renderGameBoard, playerGameBoard } from './dom';
 
+// Imports from utills
+import {
+  createHumanPlayerShips,
+  highlightPlayerShipsOnBoard,
+  revealComputerTable,
+} from '/src/js-files/utills.js';
+
 // Define ship data including length, ID, image URL, and name
 const shipData = [
   { length: 5, id: 'ship5', shipUrl: battleshipX, shipName: 'Battleship (5f)' },
@@ -22,59 +29,12 @@ const shipData = [
   { length: 2, id: 'ship2', shipUrl: submarineX, shipName: 'Destroyer (2f)' },
 ];
 
-// Function to create human player ships
-const createHumanPlayerShips = () => {
-  const allShipsContainer = document.querySelector('.player-ships-class');
-  shipData.forEach((data) => {
-    const shipContainer = document.createElement('div');
-    shipContainer.className = 'ship-container';
-    shipContainer.id = data.id;
-
-    const shipName = document.createElement('p');
-    shipName.textContent = data.shipName;
-
-    const ship = document.createElement('img');
-    ship.draggable = true;
-    ship.src = data.shipUrl;
-    ship.dataset.length = data.length;
-
-    shipContainer.append(shipName, ship);
-    allShipsContainer.append(shipContainer);
-  });
-};
-
-// Initialize player ships
-createHumanPlayerShips();
+// Initialize player ships using the createHumanPlayerShips from utills
+createHumanPlayerShips(shipData);
 
 // Get ships and player cells
 const playerShips = document.querySelectorAll('.ship-container');
 const playerCells = document.querySelectorAll('.playerCells');
-
-// Function to highlight cells with ships
-const highlightShipsOnBoard = () => {
-  playerCells.forEach((playerCell) => {
-    if (playerCell.textContent === 'ship') {
-      playerCell.classList.add('ship-position');
-    }
-  });
-};
-
-const revealComputerTable = () => {
-  let numberOfShipsPlaced = 0;
-
-  playerCells.forEach((playerCell) => {
-    if (playerCell.textContent === 'ship') {
-      numberOfShipsPlaced += 1;
-    }
-  });
-
-  if (numberOfShipsPlaced === 17) {
-    const computerTableContainer = document.querySelector(
-      '.computer-table-container'
-    );
-    computerTableContainer.classList.add('reveal-computer-tabel-container');
-  }
-};
 
 // Drag start event handler
 const dragStart = (e) => {
@@ -139,10 +99,11 @@ const drop = (e) => {
   dragable.parentNode.classList.add('hide-ship-container');
 
   player.placeShip(playerShip, row, col);
-  renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
 
-  highlightShipsOnBoard();
-  revealComputerTable();
+  renderGameBoard(playerGameBoard, playerCells);
+
+  highlightPlayerShipsOnBoard(playerCells);
+  revealComputerTable(playerCells);
 };
 
 // Attach drag and drop event handlers to player cells
@@ -177,13 +138,12 @@ playerShips.forEach((ship) => {
   ship.addEventListener('touchend', (e) => {
     if (e.target.hasAttribute('draggable')) {
       const touchLocation = e.changedTouches[0];
-      const gridCells = document.querySelectorAll('.playerCells');
 
       // Calculate the row and column indices based on touch position
       let row;
       let col;
 
-      gridCells.forEach((cell, index) => {
+      playerCells.forEach((cell, index) => {
         const rect = cell.getBoundingClientRect();
         if (
           touchLocation.clientX >= rect.left &&
@@ -211,12 +171,9 @@ playerShips.forEach((ship) => {
       e.target.parentNode.classList.add('hide-ship-container');
 
       player.placeShip(playerShip, row, col);
-      renderGameBoard(
-        playerGameBoard,
-        document.querySelectorAll('.playerCells')
-      );
-      highlightShipsOnBoard();
-      revealComputerTable();
+      renderGameBoard(playerGameBoard, playerCells);
+      highlightPlayerShipsOnBoard(playerCells);
+      revealComputerTable(playerCells);
     }
   });
 });
