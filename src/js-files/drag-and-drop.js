@@ -119,6 +119,12 @@ playerCells.forEach((cell) => {
 });
 
 playerShips.forEach((ship) => {
+  ship.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+  });
+});
+
+playerShips.forEach((ship) => {
   ship.addEventListener('touchend', (e) => {
     if (e.target.hasAttribute('draggable')) {
       const touchLocation = e.changedTouches[0];
