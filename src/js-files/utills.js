@@ -62,9 +62,9 @@ const revealComputerTable = (playerCells) => {
   }
 };
 
-function handleGameOver(player) {
+function handleGameOver(player, opponentName) {
   if (player.gameBoard.gameOver()) {
-    const gameOverMessage = 'Game Over!';
+    const gameOverMessage = `Game Over, ${opponentName} won`;
     const restartButtonText = 'Restart Game';
 
     const gameOverContainer = document.createElement('div');

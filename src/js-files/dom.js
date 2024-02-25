@@ -62,7 +62,8 @@ let humanTurn = true;
 const computerPlayerTurn = () => {
   const { x, y } = generateCoordinates();
   computer.attack(player, x, y);
-  handleGameOver(player);
+
+  handleGameOver(player, 'Computer');
 
   document.querySelectorAll('.playerCells').forEach((playerCell) => {
     if (playerCell.textContent === 'hit') {
@@ -101,7 +102,7 @@ const humanPlayerAttackFunction = (
         return;
       }
 
-      handleGameOver(computer);
+      handleGameOver(computer, 'Human Player');
       computerCell.style.backgroundColor = 'yellow';
 
       if (computerCell.textContent === 'ship') {
