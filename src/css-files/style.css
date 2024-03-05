@@ -4,10 +4,6 @@
   margin: 0;
 }
 
-body {
-  /* font-size: clamp(0.5rem, 1dvw, 1.5rem); */
-}
-
 .main-container {
   display: flex;
   flex-wrap: wrap;
@@ -17,8 +13,7 @@ body {
 
 table {
   border-collapse: collapse;
-  width: max-content;
-  margin: 1dvw;
+  margin: 2vw;
 }
 
 table,
@@ -27,24 +22,19 @@ td {
   border: 1px solid black;
 }
 
-td {
-  text-align: center;
-  width: clamp(1.8rem, 4dvw, 3rem);
-  height: clamp(1.8rem, 4dvw, 3rem);
-}
-
 .ship-container {
   text-align: center;
   align-items: center;
   background-color: rgba(230, 227, 225, 0.852);
   margin: 5px;
-  padding: 5px;
-  width: 120px;
-  height: 90px;
   border: 2px solid black;
   border-radius: 8px;
-  font-size: 0.8rem;
   cursor: pointer;
+}
+
+.ship-container img {
+  width: 9dvw;
+  height: 4dvw;
 }
 
 #player-details {
@@ -53,11 +43,6 @@ td {
   justify-content: center;
   align-items: center;
   gap: 1dvw;
-}
-
-.ship-container img {
-  max-width: 100%;
-  height: 50%;
 }
 
 /* Drag and drop styles */
@@ -122,11 +107,5 @@ td {
   .player-ships-class {
     display: flex;
     margin: 1rem;
-  }
-
-  .ship-container {
-    width: 70px;
-    height: 60px;
-    font-size: 0.5rem;
   }
 }
