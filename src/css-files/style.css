@@ -13,17 +13,20 @@
 
 table {
   border-collapse: collapse;
-  margin: 2vw;
-  border: 1px solid #ddd;
-  table-layout: fixed;
+  width: max-content;
+  margin: 1dvw;
 }
 
 table,
 th,
 td {
   border: 1px solid black;
-  width: 2.5rem;
-  height: 2.5rem;
+}
+
+td {
+  text-align: center;
+  width: clamp(1.8rem, 4dvw, 3rem);
+  height: clamp(1.8rem, 4dvw, 3rem);
 }
 
 .ship-container {
@@ -34,14 +37,6 @@ td {
   border: 2px solid black;
   border-radius: 8px;
   cursor: pointer;
-}
-
-.ship-container img {
-  max-width: 100px;
-  max-height: 50px;
-}
-
-.ship-container p {
 }
 
 #player-details {
