@@ -13,7 +13,6 @@
 
 table {
   border-collapse: collapse;
-  width: max-content;
   margin: 1dvw;
 }
 
@@ -38,12 +37,12 @@ td {
   border-radius: 8px;
   cursor: pointer;
   width: clamp(2.5rem, 10dvw, 6rem);
-  aspect-ratio: 1/0.5;
+  aspect-ratio: 1/0.6;
 }
 
 .ship-container img {
   max-width: 100%;
-  max-height: 60%;
+  max-height: 70%;
 }
 
 .ship-container p {
