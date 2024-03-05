@@ -25,8 +25,8 @@ td {
 
 td {
   text-align: center;
-  width: clamp(1.8rem, 4dvw, 3rem);
-  height: clamp(1.8rem, 4dvw, 3rem);
+  width: clamp(1.5rem, 4dvw, 3rem);
+  height: clamp(1.5rem, 4dvw, 3rem);
 }
 
 .ship-container {
@@ -37,6 +37,17 @@ td {
   border: 2px solid black;
   border-radius: 8px;
   cursor: pointer;
+  width: clamp(2.5rem, 10dvw, 6rem);
+  aspect-ratio: 1/0.5;
+}
+
+.ship-container img {
+  max-width: 100%;
+  max-height: 60%;
+}
+
+.ship-container p {
+  font-size: 50%;
 }
 
 #player-details {
