@@ -152,6 +152,8 @@ playerShips.forEach((ship) => {
 
       if (player.placeShip(playerShip, row, col) === false) {
         e.target.style.position = 'static';
+        e.target.style.width = '100%';
+        e.target.style.height = '50%';
         ship.append(e.target);
         return;
       }
