@@ -5,6 +5,7 @@
 }
 
 .main-container {
+  height: 100dvw;
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
