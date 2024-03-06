@@ -9,6 +9,7 @@
   flex-wrap: wrap;
   gap: 30px;
   justify-content: center;
+  align-items: center;
 }
 
 table {
@@ -22,8 +23,9 @@ th,
 td {
   border: 1px solid black;
   text-align: center;
-  width: clamp(1.6rem, 4dvw, 3rem);
-  height: clamp(1.6rem, 4dvw, 3rem);
+  width: 50px;
+  aspect-ratio: 1/1;
+  font-size: 50%;
 }
 
 .ship-container {
@@ -34,7 +36,7 @@ td {
   border: 2px solid black;
   border-radius: 8px;
   cursor: pointer;
-  width: clamp(3rem, 10dvw, 7rem);
+  width: 5rem;
   aspect-ratio: 1/0.8;
 }
 
@@ -49,7 +51,6 @@ td {
 
 #player-details {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 1dvw;
@@ -113,9 +114,45 @@ td {
   background-color: #45a049;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 650px) {
   .player-ships-class {
     display: flex;
-    margin: 1rem;
+  }
+
+  #player-details {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    text-align: center;
+    width: 35px;
+    aspect-ratio: 1/1;
+  }
+
+  .ship-container {
+    width: 3.5rem;
+    aspect-ratio: 1/0.8;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    text-align: center;
+    width: 25px;
+    aspect-ratio: 1/1;
+  }
+
+  .ship-container {
+    width: 2.8rem;
+    aspect-ratio: 1/0.8;
   }
 }
