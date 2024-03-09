@@ -5,7 +5,10 @@
 }
 
 .main-container {
-  height: 100dvw;
+  min-height: 100vh;
+  background-image: url('/src/assets/background-image.jpg');
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
@@ -22,11 +25,13 @@ table {
 table,
 th,
 td {
-  border: 1px solid black;
+  border: 2px solid white;
   text-align: center;
   width: 50px;
   aspect-ratio: 1/1;
   font-size: 50%;
+  color: transparent;
+  box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.26);
 }
 
 .ship-container {
@@ -67,11 +72,6 @@ td {
 
 .drag-over {
   border: dashed 3px red;
-}
-
-.computerCells,
-.playerCells {
-  color: white;
 }
 
 .ship-position {
@@ -130,8 +130,6 @@ td {
   table,
   th,
   td {
-    border: 1px solid black;
-    text-align: center;
     width: 35px;
     aspect-ratio: 1/1;
   }
@@ -146,9 +144,7 @@ td {
   table,
   th,
   td {
-    border: 1px solid black;
-    text-align: center;
-    width: 25px;
+    width: 8dvw;
     aspect-ratio: 1/1;
   }
 
