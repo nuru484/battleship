@@ -85,8 +85,7 @@ td {
 
 .computer-table-container p,
 .player-table-container p {
-  color: blue;
-  font-size: 2rem;
+  font-size: 1rem;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   color: #32808d;
