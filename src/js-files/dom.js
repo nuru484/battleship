@@ -54,8 +54,8 @@ export const renderGameBoard = (gameBoardArray, cells) => {
   });
 };
 
-renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
-renderGameBoard(computerGameBoard, document.querySelectorAll('.computerCells'));
+// renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
+// renderGameBoard(computerGameBoard, document.querySelectorAll('.computerCells'));
 
 let humanTurn = true;
 

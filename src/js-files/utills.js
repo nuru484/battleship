@@ -45,6 +45,18 @@ const highlightPlayerShipsOnBoard = (playerCells) => {
   });
 };
 
+const welcomePage = () => {
+  const welcomeElement = document.querySelector('.welcome-page');
+
+  // welcomeElement.style.display = 'none';
+
+  const gamePage = document.querySelector('.main-container');
+
+  gamePage.style.display = 'none';
+};
+
+welcomePage();
+
 const revealComputerTable = (playerCells) => {
   let numberOfShipsPlaced = 0;
 
