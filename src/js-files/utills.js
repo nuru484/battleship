@@ -47,12 +47,22 @@ const highlightPlayerShipsOnBoard = (playerCells) => {
 
 const welcomePage = () => {
   const welcomeElement = document.querySelector('.welcome-page');
-
-  // welcomeElement.style.display = 'none';
+  const formButton = document.querySelector('.form-button');
+  const playerNameInput = document.getElementById('player-name');
 
   const gamePage = document.querySelector('.main-container');
 
   gamePage.style.display = 'none';
+
+  formButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    if (playerNameInput.value !== '') {
+      welcomeElement.style.display = 'none';
+    }
+
+    gamePage.style.display = 'flex';
+  });
 };
 
 welcomePage();

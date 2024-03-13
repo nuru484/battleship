@@ -102,7 +102,7 @@ const humanPlayerAttackFunction = (
         return;
       }
 
-      handleGameOver(computer, 'Human Player');
+      handleGameOver(computer, document.getElementById('player-name').value);
       computerCell.style.backgroundColor = 'yellow';
 
       if (computerCell.textContent === 'ship') {
