@@ -49,7 +49,6 @@ const welcomePage = () => {
   const welcomeElement = document.querySelector('.welcome-page');
   const formButton = document.querySelector('.form-button');
   const playerNameInput = document.getElementById('player-name');
-
   const gamePage = document.querySelector('.main-container');
 
   gamePage.style.display = 'none';
@@ -57,11 +56,12 @@ const welcomePage = () => {
   formButton.addEventListener('click', (e) => {
     e.preventDefault();
 
-    if (playerNameInput.value !== '') {
-      welcomeElement.style.display = 'none';
-    }
+    const trimmedPlayerName = playerNameInput.value.trim();
 
-    gamePage.style.display = 'flex';
+    if (trimmedPlayerName !== '') {
+      welcomeElement.style.display = 'none';
+      gamePage.style.display = 'flex';
+    }
   });
 };
 
