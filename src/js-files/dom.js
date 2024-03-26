@@ -57,11 +57,12 @@ export const renderGameBoard = (gameBoardArray, cells) => {
 let humanTurn = true;
 
 const computerPlayerTurn = () => {
-  const { x, y } = generateCoordinates();
+  let { x, y } = generateCoordinates();
 
-  const attackHumanPlayer = computer.attack(player, x, y);
-  if (attackHumanPlayer) {
-    console.log('hello');
+  let attackResult = computer.attack(player, x, y);
+  while (attackResult) {
+    y += 1;
+    attackResult = computer.attack(player, x, y);
   }
 
   handleGameOver(player, 'Computer');
