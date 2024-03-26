@@ -36,7 +36,7 @@ export const createGameBoard = (table, className) => {
     const row = table.insertRow();
     for (let j = 0; j < 10; j++) {
       const cell = row.insertCell();
-      cell.textContent = ``;
+      cell.textContent = '';
       cell.classList.add(className);
     }
   }
@@ -54,14 +54,15 @@ export const renderGameBoard = (gameBoardArray, cells) => {
   });
 };
 
-// renderGameBoard(playerGameBoard, document.querySelectorAll('.playerCells'));
-// renderGameBoard(computerGameBoard, document.querySelectorAll('.computerCells'));
-
 let humanTurn = true;
 
 const computerPlayerTurn = () => {
   const { x, y } = generateCoordinates();
-  computer.attack(player, x, y);
+
+  const attackHumanPlayer = computer.attack(player, x, y);
+  if (attackHumanPlayer) {
+    console.log('hello');
+  }
 
   handleGameOver(player, 'Computer');
 

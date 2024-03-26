@@ -102,12 +102,13 @@ class Gameboard {
         if (hitShip) {
           hitShip.hit();
           this.gameGrid[row][column] = 'hit';
+          return true;
         }
       } else if (
         this.gameGrid[row][column] === 'hit' ||
         this.gameGrid[row][column] === 'miss'
       ) {
-        return;
+        return false;
       }
     }
     if (typeof this.gameGrid[row][column] === 'number') {
@@ -151,8 +152,12 @@ class Player {
 
   attack(opponent, row, column) {
     if (this.gameBoard) {
-      opponent.gameBoard.receiveAttack(row, column);
+      const attack = opponent.gameBoard.receiveAttack(row, column);
+      if (attack) {
+        return true;
+      }
     }
+    return false;
   }
 }
 
